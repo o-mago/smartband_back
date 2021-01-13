@@ -26,8 +26,10 @@ async function insertData(client, data){
   let value = "ok";
 
   // HeartBeat
-  if(data[0] == 229) {
+  if(data[0] == 229 && data[3]) {
     value = `${data[3]}`;
+  } else {
+    return;
   }
   const query = {
     text: 'INSERT INTO heartbeat(username, value) VALUES($1, $2)',
