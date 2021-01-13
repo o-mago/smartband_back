@@ -26,7 +26,7 @@ async function insertData(client, data){
   let value = "ok";
 
   // HeartBeat
-  if(data[0] == 229 && data[3]) {
+  if(data[0] == 229 && data.length > 3 && data[3] > 0) {
     value = `${data[3]}`;
   } else {
     return;
