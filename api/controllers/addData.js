@@ -28,25 +28,33 @@ async function insertData(client, data){
   // HeartBeat
   if(data[0] == 229 && data.length > 3 && data[3] > 0) {
     value = `${data[3]}`;
+    const query = {
+      text: 'INSERT INTO heartbeat(username, value) VALUES($1, $2)',
+      values: ['teste', value],
+    }
   } 
   // Pressure
   else if(data[0] == 199 && data.length > 4 && data[3] > 0 && data[4] > 0) {
     value = `${data[3]}:${data[4]}`;
+    const query = {
+      text: 'INSERT INTO pressure(username, value) VALUES($1, $2)',
+      values: ['teste', value],
+    }
   } 
   //Temperature
-  else if(data[0] == 36 && data.length > 10 && (data[9] > 0 || data[10] > 0)) {
+  else if(data[0] == 36 && data.length > 10 && data[9] > 0) {
     let temp1 = data[9].toString(16);
     let temp2 = data[10].toString(16);
     let tempFinalHex = temp1+temp2;
     let tempFinal = parseInt(tempFinalHex, 16).toString();
-    value = `${tempFinal.slice(-2,0)}`;
+    value = `${tempFinal.substr(-2,2)}`
+    const query = {
+      text: 'INSERT INTO temperature(username, value) VALUES($1, $2)',
+      values: ['teste', value],
+    }
   }
   else {
     return;
-  }
-  const query = {
-    text: 'INSERT INTO heartbeat(username, value) VALUES($1, $2)',
-    values: ['teste', value],
   }
   client.query(query, (err, res) => {
     if (err) {
