@@ -52,7 +52,7 @@ async function insertData(client, data){
     let temp2 = data[10].toString(16);
     let tempFinalHex = temp1+temp2;
     let tempFinal = parseInt(tempFinalHex, 16).toString();
-    value = `${tempFinal.substr(0,0,tempFinal.length-2)+tempFinal.substr(-2,2)}`
+    value = `${tempFinal.substr(0,tempFinal.length-2)+tempFinal.substr(-2,2)}`
     query = {
       text: 'INSERT INTO temperature(username, value) VALUES($1, $2)',
       values: ['teste', value],
