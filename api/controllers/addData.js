@@ -25,10 +25,15 @@ module.exports = async (req, res, next) => {
 async function insertData(client, data){
   let value = "ok";
 
+  let query = {
+    text: '',
+    values: [],
+  }
+
   // HeartBeat
   if(data[0] == 229 && data.length > 3 && data[3] > 0) {
     value = `${data[3]}`;
-    const query = {
+    query = {
       text: 'INSERT INTO heartbeat(username, value) VALUES($1, $2)',
       values: ['teste', value],
     }
@@ -36,7 +41,7 @@ async function insertData(client, data){
   // Pressure
   else if(data[0] == 199 && data.length > 4 && data[3] > 0 && data[4] > 0) {
     value = `${data[3]}:${data[4]}`;
-    const query = {
+    query = {
       text: 'INSERT INTO pressure(username, value) VALUES($1, $2)',
       values: ['teste', value],
     }
@@ -48,7 +53,7 @@ async function insertData(client, data){
     let tempFinalHex = temp1+temp2;
     let tempFinal = parseInt(tempFinalHex, 16).toString();
     value = `${tempFinal.substr(-2,2)}`
-    const query = {
+    query = {
       text: 'INSERT INTO temperature(username, value) VALUES($1, $2)',
       values: ['teste', value],
     }
