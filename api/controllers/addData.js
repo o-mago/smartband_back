@@ -18,6 +18,7 @@ module.exports = async (req, res, next) => {
   } catch(err) {
     return res.status(500).json("Internal error");
   } finally {
+    client.end();
     return res.status(200).json("ok");
   }
 }
@@ -30,29 +31,33 @@ async function insertData(client, data){
     values: [],
   }
 
-  // HeartBeat
-  if(data[0] == 229 && data.length > 3 && data[3] > 0) {
-    value = `${data[3]}`;
+  // Heart Beat
+  if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 4 && data[3] == 255 && data[4] == 49 && data[5] == 9 && data[6] > 0) {
+    value = `${data[6]}`;
     query = {
       text: 'INSERT INTO heartbeat(username, value) VALUES($1, $2)',
       values: ['teste', value],
     }
   } 
   // Pressure
-  else if(data[0] == 199 && data.length > 4 && data[3] > 0 && data[4] > 0) {
-    value = `${data[3]}:${data[4]}`;
+  else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 4 && data[3] == 255 && data[4] == 49 && data[5] == 37 && data[6] > 0) {
+    value = `${data[6]}:${data[7]}`;
+    query = {
+      text: 'INSERT INTO saturation(username, value) VALUES($1, $2)',
+      values: ['teste', value],
+    }
+  }
+  // Saturation
+  else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 4 && data[3] == 255 && data[4] == 49 && data[5] == 17 && data[6] > 0) {
+    value = `${data[6]}`;
     query = {
       text: 'INSERT INTO pressure(username, value) VALUES($1, $2)',
       values: ['teste', value],
     }
   } 
-  //Temperature
-  else if(data[0] == 36 && data.length > 10 && data[9] > 0) {
-    let temp1 = data[9].toString(16);
-    let temp2 = data[10].toString(16);
-    let tempFinalHex = temp1+temp2;
-    let tempFinal = parseInt(tempFinalHex, 16).toString();
-    value = `${tempFinal.substr(0,tempFinal.length-2)+"."+tempFinal.substr(-2,2)}`
+  // Temperature
+  else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 4 && data[3] == 255 && data[4] == 134 && data[5] == 128 && data[6] > 0) {
+    value = `${data[6]}.${data[7]}`;
     query = {
       text: 'INSERT INTO temperature(username, value) VALUES($1, $2)',
       values: ['teste', value],
