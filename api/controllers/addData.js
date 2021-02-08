@@ -43,7 +43,7 @@ async function insertData(client, data){
     }
   } 
   // Pressure
-  else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 5 && data[3] == 255 && data[4] == 49 && data[5] == 37 && data[6] > 0) {
+  else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 5 && data[3] == 255 && data[4] == 49 && data[5] == 33 && data[6] > 0) {
     value = `${data[6]}:${data[7]}`;
     query = {
       text: 'INSERT INTO saturation(username, value) VALUES($1, $2)',
