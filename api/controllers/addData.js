@@ -3,8 +3,7 @@ const { Client } = require('pg')
 module.exports = async (req, res, next) => {
   let returnState = null;
   try {
-    const client = {}
-    new Client({
+    const client = new Client({
       user: process.env.DB_USER,
       host: process.env.DB_HOST,
       database: process.env.DB_DATABASE,
