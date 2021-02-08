@@ -35,7 +35,7 @@ async function insertData(client, data){
   console.log(data);
 
   // Heart Beat
-  if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 4 && data[3] == 255 && data[4] == 49 && data[5] == 9 && data[6] > 0) {
+  if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 5 && data[3] == 255 && data[4] == 49 && data[5] == 9 && data[6] > 0) {
     value = `${data[6]}`;
     query = {
       text: 'INSERT INTO heartbeat(username, value) VALUES($1, $2)',
@@ -43,7 +43,7 @@ async function insertData(client, data){
     }
   } 
   // Pressure
-  else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 4 && data[3] == 255 && data[4] == 49 && data[5] == 37 && data[6] > 0) {
+  else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 5 && data[3] == 255 && data[4] == 49 && data[5] == 37 && data[6] > 0) {
     value = `${data[6]}:${data[7]}`;
     query = {
       text: 'INSERT INTO saturation(username, value) VALUES($1, $2)',
@@ -51,7 +51,7 @@ async function insertData(client, data){
     }
   }
   // Saturation
-  else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 4 && data[3] == 255 && data[4] == 49 && data[5] == 17 && data[6] > 0) {
+  else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 5 && data[3] == 255 && data[4] == 49 && data[5] == 17 && data[6] > 0) {
     value = `${data[6]}`;
     query = {
       text: 'INSERT INTO pressure(username, value) VALUES($1, $2)',
@@ -59,7 +59,7 @@ async function insertData(client, data){
     }
   } 
   // Temperature
-  else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 4 && data[3] == 255 && data[4] == 134 && data[5] == 128 && data[6] > 0) {
+  else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 5 && data[3] == 255 && data[4] == 134 && data[5] == 128 && data[6] > 0) {
     value = `${data[6]}.${data[7]}`;
     query = {
       text: 'INSERT INTO temperature(username, value) VALUES($1, $2)',
