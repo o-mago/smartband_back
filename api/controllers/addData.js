@@ -1,6 +1,7 @@
 const { Client } = require('pg')
 
 module.exports = async (req, res, next) => {
+  let returnState = null;
   try {
     const client = {}
     new Client({
@@ -15,10 +16,12 @@ module.exports = async (req, res, next) => {
     let data = req.body.data;
     client.connect();
     await insertData(client, data);
+    returnState = res.status(200).json("ok");
   } catch(err) {
-    return res.status(500).json("Internal error");
+    console.log(err)
+    returnState = res.status(500).json("Internal error");
   } finally {
-    return res.status(200).json("ok");
+    return returnState;
   }
 }
 
@@ -65,6 +68,7 @@ async function insertData(client, data){
     }
   }
   else {
+    client.end();
     return;
   }
   client.query(query, (err, res) => {
