@@ -12,6 +12,7 @@ module.exports = () => {
   app.use(cors());
 
   require('../api/routes/addData')(app);
+  require('../api/routes/login')(app);
   require('../api/routes/status')(app);
 
   return app;

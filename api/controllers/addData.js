@@ -38,7 +38,7 @@ async function insertData(client, data){
   if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 5 && data[3] == 255 && data[4] == 49 && data[5] == 9 && data[6] > 0) {
     value = `${data[6]}`;
     query = {
-      text: 'INSERT INTO heartbeat(username, value) VALUES($1, $2)',
+      text: 'INSERT INTO heartbeat(cpf, value) VALUES($1, $2)',
       values: ['teste', value],
     }
   } 
@@ -46,7 +46,7 @@ async function insertData(client, data){
   else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 5 && data[3] == 255 && data[4] == 49 && data[5] == 33 && data[6] > 0) {
     value = `${data[6]}:${data[7]}`;
     query = {
-      text: 'INSERT INTO pressure(username, value) VALUES($1, $2)',
+      text: 'INSERT INTO pressure(cpf, value) VALUES($1, $2)',
       values: ['teste', value],
     }
   }
@@ -54,7 +54,7 @@ async function insertData(client, data){
   else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 5 && data[3] == 255 && data[4] == 49 && data[5] == 17 && data[6] > 0) {
     value = `${data[6]}`;
     query = {
-      text: 'INSERT INTO saturation(username, value) VALUES($1, $2)',
+      text: 'INSERT INTO saturation(cpf, value) VALUES($1, $2)',
       values: ['teste', value],
     }
   } 
@@ -62,7 +62,7 @@ async function insertData(client, data){
   else if(data.length === 8 && data[0] == 171 && data[1] == 0 && data[2] == 5 && data[3] == 255 && data[4] == 134 && data[5] == 128 && data[6] > 0) {
     value = `${data[6]}.${data[7]}`;
     query = {
-      text: 'INSERT INTO temperature(username, value) VALUES($1, $2)',
+      text: 'INSERT INTO temperature(cpf, value) VALUES($1, $2)',
       values: ['teste', value],
     }
   }
