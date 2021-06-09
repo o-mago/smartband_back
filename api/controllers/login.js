@@ -1,6 +1,7 @@
 const { Client } = require('pg')
 
 module.exports = async (req, res, next) => {
+  console.log("teste")
   let returnState = null;
   try {
     const client = new Client({
@@ -24,7 +25,7 @@ module.exports = async (req, res, next) => {
   }
 }
 
-async function login(client, data){
+async function login(client, data) {
   let query = {
     text: '',
     values: [],
@@ -32,8 +33,8 @@ async function login(client, data){
 
   if(data) {
     query = {
-      text: 'INSERT INTO users(cpf) VALUES($1) ON CONFLICT DO NOTHING/UPDATE',
-      values: ['teste', data],
+      text: 'INSERT INTO users(cpf) VALUES($1) ON CONFLICT DO NOTHING',
+      values: [data],
     }
   }
   else {
